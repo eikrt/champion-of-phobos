@@ -1,8 +1,8 @@
 
-import { classes } from "./raycaster.classes.js"
-import { objects } from "./raycaster.objects.js"
-import { constants } from "./raycaster.constants.js"
-import { drawing } from "./raycaster.drawing.js"
+import { classes } from "./classes.js"
+import { objects } from "../world/objects.js"
+import { constants } from "./constants.js"
+import { drawing } from "./drawing.js"
 export function raycasting()
 {
         let fishbowlFixValue = 0;

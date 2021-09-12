@@ -1,12 +1,12 @@
 
-import { objects } from "./raycaster.objects.js";
+import { objects } from "../world/objects.js";
 
-import { constants } from "./raycaster.constants.js";
+import { constants } from "../utils/constants.js";
 
-import { levels } from "./raycaster.objects.level.js";
-import { movement } from "./raycaster.movement.js";
+import { levels } from "../world/levels.js";
+import { movement } from "../utils/movement.js";
 
-import { renderEngine } from "./raycaster.renderengine.js"
+import { renderEngine } from "../utils/renderengine.js"
 var Raycaster = function() 
 {
     

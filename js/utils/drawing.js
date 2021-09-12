@@ -1,6 +1,6 @@
-import { classes } from "./raycaster.classes.js"
-import { objects } from "./raycaster.objects.js"
-import { constants } from "./raycaster.constants.js"
+import { classes } from "./classes.js"
+import { objects } from "../world/objects.js"
+import { constants } from "./constants.js"
 
 export let drawing =
 {

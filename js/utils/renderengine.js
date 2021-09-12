@@ -1,11 +1,10 @@
-import { classes } from "./raycaster.classes.js"
-import { objects } from "./raycaster.objects.js"
-import { constants } from "./raycaster.constants.js"
-import { drawing } from "./raycaster.drawing.js"
-import { raycasting } from "./raycaster.raycasting.js"
+import { classes } from "./classes.js"
+import { objects } from "../world/objects.js"
+import { constants } from "./constants.js"
+import { drawing } from "./drawing.js"
+import { raycasting } from "./raycasting.js"
 export function renderEngine()
 {
-        let lastFpsUpdate = new Date().getTime();
     
     constants.distanceToViewport = Math.round(constants.screenWidth / 2 / Math.tan(constants.fieldOfView / 2 * (Math.PI / 180)));
     constants.angleBetweenRays   = Number(constants.fieldOfView / constants.screenWidth);
@@ -43,10 +42,10 @@ export function renderEngine()
         var context = objects.context,
             gradient = context.createLinearGradient(0, constants.screenHeight / 2, 0, constants.screenHeight);
         
-        gradient.addColorStop(0, drawing.colorRgb(20, 20, 20));
-        gradient.addColorStop(0.25, drawing.colorRgb(40, 40, 40));
-        gradient.addColorStop(0.6, drawing.colorRgb(100, 100, 100));
-        gradient.addColorStop(1, drawing.colorRgb(130, 130, 130));
+        gradient.addColorStop(0, drawing.colorRgb(5, 5, 5));
+        gradient.addColorStop(0.25, drawing.colorRgb(10, 10, 10));
+        gradient.addColorStop(0.6, drawing.colorRgb(20, 20, 20));
+        gradient.addColorStop(1, drawing.colorRgb(30, 30, 30));
         
         context.fillStyle = gradient;
         context.fillRect(0, constants.screenHeight / 2, constants.screenWidth, constants.screenHeight / 2);

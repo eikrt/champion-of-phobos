@@ -1,7 +1,7 @@
 
-import { constants } from "./raycaster.constants.js"
+import { constants } from "../utils/constants.js"
 
-import { classes } from "./raycaster.classes.js"
+import { classes } from "../utils/classes.js"
 
 
 export let objects =
@@ -24,10 +24,6 @@ export let objects =
 	},
         renderLighting: function() {
         	return true;
-	},
-        renderMiniMap: function() {
-        	return true;
-
 	},
         renderSky: function() {
         
@@ -88,7 +84,9 @@ export let objects =
         charE: classes.KeyButton(69),
         charS: classes.KeyButton(83),
         charD: classes.KeyButton(68),
-        charX: classes.KeyButton(88)
+
+        charX: classes.KeyButton(88),
+        space: classes.KeyButton(32)
     },
     
     context: null,         

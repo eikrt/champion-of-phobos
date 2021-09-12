@@ -4,8 +4,8 @@ export let constants =
     screenWidth: 640,       
     screenHeight: 480,      
     angleBetweenRays: Number(66 / 640), 
-    movementStep: 9,        
-    turningStep: 3,        
+    movementStep: 25,        
+    turningStep: 9,        
     startFadingAt: 100,    
     playerStartAngle: 273,  
     playerStartPos: {      
@@ -16,7 +16,6 @@ export let constants =
     distanceToViewport: 0,  
     noClipping: false,    
     displayDebugInfo: false,
-    runningLocal: location.href.indexOf("file://") > -1,
     texturesFiles: [       
         "res/bricks-brown.png",
         "res/bricks-gray.png",

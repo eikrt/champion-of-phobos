@@ -112,7 +112,6 @@ export let classes  =
             self.setValue(self.degrees + degrees);
         };
 
-        // Determine to which quadrant of a circle the angle is facing
         this.getQuadrant = function() {
             var rounded = ~~ (0.5 + self.degrees);
             

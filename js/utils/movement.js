@@ -1,11 +1,11 @@
 
-import { classes } from "./raycaster.classes.js"
-import { objects } from "./raycaster.objects.js"
+import { classes } from "./classes.js"
+import { objects } from "../world/objects.js"
 
-import { constants } from "./raycaster.constants.js"
+import { constants } from "./constants.js"
 
-import { renderEngine } from "./raycaster.renderengine.js"
-import { raycasting } from "./raycaster.raycasting.js"
+import { renderEngine } from "./renderengine.js"
+import { raycasting } from "./raycasting.js"
 
 
 export function movement () {
@@ -83,6 +83,8 @@ export function movement () {
     
     var update = function()
     {
+	    if (objects.keys.space.pressed) {
+	    }
         if (objects.keys.arrowLeft.pressed || objects.keys.charQ.pressed) {
             turn(constants.turningStep);
         }
@@ -157,6 +159,7 @@ export function movement () {
         };
         
         window.addEventListener("keydown", keyDownHandler, false);
+
         window.addEventListener("keyup", keyUpHandler, false);
         
         var keys = document.getElementsByClassName("keys");
