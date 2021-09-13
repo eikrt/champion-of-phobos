@@ -1,5 +1,7 @@
 
+
 import { objects } from "../world/objects.js";
+import { core_logic } from "../utils/logic.js";
 
 import { constants } from "../utils/constants.js";
 
@@ -32,6 +34,7 @@ var Raycaster = function()
         
         objects.gameloopInterval = setInterval(function() {
             movement().update();
+	    core_logic().logic()
             renderEngine().update();
         }, constants.glIntervalTimeout);
     }

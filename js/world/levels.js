@@ -22,7 +22,7 @@ classes.Wall(100, 10, 700, 10, 0, 0, 200, 200, 1),
     ],
     
     sprites: [
-        classes.Sprite(100, 300, 0, 2),
+        classes.Sprite(100, 300, 0,0,0, 2),
     ],
     
     elevations: [    

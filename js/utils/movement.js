@@ -1,6 +1,8 @@
 
 import { classes } from "./classes.js"
+
 import { objects } from "../world/objects.js"
+import { levels } from "../world/levels.js"
 
 import { constants } from "./constants.js"
 
@@ -54,14 +56,14 @@ export function movement () {
     
     var elevate = function(up)
     {
-        step = up ? constants.movementStep : -constants.movementStep;
+        let step = up ? constants.movementStep : -constants.movementStep;
         player.z += step;
         
         if (player.z < 0) {
             player.z = 0;
         }
         
-        renderEngine.redraw();
+        renderEngine().redraw();
     };
     
     var strafe = function(left)
@@ -70,20 +72,21 @@ export function movement () {
             ? new classes.Angle(player.angle.degrees + 90)
             : new classes.Angle(player.angle.degrees - 90);
         
-        var delta = raycasting.getDeltaXY(angle, constants.movementStep);
-            intersection = findIntersection(angle);
+        var delta = raycasting().getDeltaXY(angle, constants.movementStep);
+           let  intersection = findIntersection(angle);
         
         if (!intersection || intersection.distance > 20) {
             player.x = Math.round(player.x + delta.x);
             player.y = Math.round(player.y - delta.y);
         }
         
-        renderEngine.redraw();
+        renderEngine().redraw();
     };
     
     var update = function()
     {
 	    if (objects.keys.space.pressed) {
+		    levels.sprites.push(classes.Sprite(player.x, player.y, 5, 0.5, player.angle.radians, 0))
 	    }
         if (objects.keys.arrowLeft.pressed || objects.keys.charQ.pressed) {
             turn(constants.turningStep);

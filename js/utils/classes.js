@@ -16,11 +16,13 @@ export let classes  =
         };
     },
     
-    Sprite: function(x, y, z, id, yoff) {
+    Sprite: function(x, y, z, velocity, angle, id, yoff) {
         return {
             x: x,      
             y: y,
             z: z,
+	    velocity: velocity,
+	    angle: angle,
             yoff: yoff,
             id: id
         };

@@ -181,11 +181,9 @@ export function renderEngine()
     
     var update = function()
     {
-        if (objects.redrawScreen) {
             updateElevation();
             drawWorld();
             objects.redrawScreen = false;
-        }
     }
     return {
         redraw: redraw,
