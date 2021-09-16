@@ -23,8 +23,9 @@ wss.on('connection', (ws) => {
 		      			client.x = message.x
 		      			client.y = message.y
 				}
-		              ws.send(JSON.stringify(client));
 	            });
+			console.log(clients.values())
+			ws.send(JSON.stringify(Array.from(clients.values())))
 		}
 		else if (message.type === "init") {
 	    		const id = uuidv4();

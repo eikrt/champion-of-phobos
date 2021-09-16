@@ -1,7 +1,9 @@
 import { levels } from '../world/levels.js'
 
 import { constants } from '../utils/constants.js'
+
 import { objects } from '../world/objects.js'
+import { classes } from '../utils/classes.js'
 
 export function core_logic() {
 	
@@ -25,7 +27,6 @@ export async function updateFromServer() {
 		ws.onmessage = (wsmessage) => {
 			
 		const messageBody = JSON.parse(wsmessage.data)
-			console.log(messageBody)
 			if (messageBody.type === "init") {
 				id = messageBody.id
 			}
@@ -58,7 +59,13 @@ export async function updateFromServer() {
 }
 
 function set_game_state(game_state) {
-
+	const entities = []
+	game_state.forEach((g) => {
+		entities.push(g.x, g.y, 0,0,0,2)
+	})
+    levels.entities = entities;
+//        classes.Sprite(100, 300, 0,0,0, 2),
 	
+    
 
 }
