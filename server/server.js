@@ -1,54 +1,84 @@
 const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 7071 });
+const wss = new WebSocket.Server({
+	port: 7071
+});
 
 
 const clients = new Map();
-
+const projectiles = []
 wss.on('connection', (ws) => {
 
 
-		
+
 	ws.on('message', (messageAsString) => {
-      		const message = JSON.parse(messageAsString);
-	      	const metadata = clients.get(ws);
+		const message = JSON.parse(messageAsString);
+		const metadata = clients.get(ws);
 		if (metadata)
-	      		message.sender = metadata.id;
+			message.sender = metadata.id;
 		if (message.type === "update") {
 
-				
-		const outbound = JSON.stringify(message);
-			
-	      clients.forEach((client) => {
-		      		if (client.id === message.id) {// state update
-		      			client.x = message.x
-		      			client.y = message.y
+			tick()
+			const outbound = JSON.stringify(message);
+
+			clients.forEach((client) => {
+				if (client.id === message.id) { // state update
+					client.x = message.x
+					client.y = message.y
 				}
-	            });
-			console.log(clients.values())
-			ws.send(JSON.stringify(Array.from(clients.values())))
-		}
-		else if (message.type === "init") {
-	    		const id = uuidv4();
-    	    		const md = {
-		    		id: id,
-			   	 x: 0,
-			   	 y: 0};
-    	    		clients.set(ws, md);
-			ws.send(JSON.stringify({type: "init",
-			id: md.id}))
+			});
+			if (message.action === "shoot") {
+				
+				shoot(message.x, message.y, message.angle)
+			}
+			let array = Array.from(clients.values())
+			array = [...array, ...projectiles]
+			ws.send(JSON.stringify(array))
+		} else if (message.type === "init") {
+			const id = uuidv4();
+			const md = {
+				id: id,
+				texId: 2,
+				x: 0,
+				y: 0
+
+			};
+			clients.set(ws, md);
+			ws.send(JSON.stringify({
+				type: "init",
+				id: md.id
+			}))
 		}
 	})
 
-	 ws.on("close", () => {
-		       clients.delete(ws);
-	     })
+	ws.on("close", () => {
+		clients.delete(ws);
 	})
+})
 
+function shoot(x, y, angle) {
 
+	projectiles.push({
+		x: x,
+		y: y,
+		z: 5,
+		velocity: 0.5,
+		angle: angle,
+		texId: 0,
+		yoff: 0})
 
+}
+function tick() {
+
+	const delta = 10
+	projectiles.forEach(s => {
+		s.x += (Math.cos(s.angle.radians) * s.velocity / delta)*1000;
+		s.y -= (Math.sin(s.angle.radians) * s.velocity / delta)*1000})
+
+}
 function uuidv4() {
-	  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-		      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-	      return v.toString(16);
-	    });
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = Math.random() * 16 | 0,
+			v = c == 'x' ? r : (r & 0x3 | 0x8);
+		return v.toString(16);
+	});
 }
