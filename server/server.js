@@ -28,7 +28,7 @@ wss.on('connection', (ws) => {
 			});
 			if (message.action === "shoot") {
 				
-				shoot(message.x, message.y, message.angle)
+				shoot(message.x, message.y, message.angle, message.id)
 			}
 			let array = Array.from(clients.values())
 			array = [...array, ...projectiles]
@@ -55,7 +55,7 @@ wss.on('connection', (ws) => {
 	})
 })
 
-function shoot(x, y, angle) {
+function shoot(x, y, angle, id) {
 
 	projectiles.push({
 		x: x,
@@ -64,7 +64,8 @@ function shoot(x, y, angle) {
 		velocity: 0.5,
 		angle: angle,
 		texId: 0,
-		yoff: 0})
+		yoff: 0,
+		shooterId: id})
 
 }
 function tick() {
