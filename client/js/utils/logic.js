@@ -5,10 +5,16 @@ import { constants } from '../utils/constants.js'
 import { objects } from '../world/objects.js'
 import { classes } from '../utils/classes.js'
 import { state } from '../world/state.js'
+let ws;
 export function core_logic() {
 
 	let logic = function (last) {
-			document.getElementById("winner").innerHTML=`WINNER: ${state.winner}`
+			if (state.winner === '') {
+				document.getElementById("winner").innerHTML=``
+			}
+			else {
+				document.getElementById("winner").innerHTML=`WINNER: ${state.winner}`
+			}
 		const delta = 10;
 		objects.Level.sprites = levels.entities;
 	}
@@ -16,13 +22,16 @@ export function core_logic() {
 		logic: logic
 	};
 }
-
-
+export async function updateWs() {
+	ws = await constants.ws
+}
 export async function updateFromServer() {
 
-	const ws = await constants.ws
-
-
+	await updateWs()
+	if (!ws) {
+		return;
+	}
+	
 	ws.onmessage = (wsmessage) => {
 
 		const messageBody = JSON.parse(wsmessage.data)
@@ -36,9 +45,7 @@ export async function updateFromServer() {
 	}
 	
 	let update = async function () {
-
 		if (objects.player.id === 0) {
-
 
 			ws.send(JSON.stringify({
 
@@ -49,7 +56,8 @@ export async function updateFromServer() {
 			ws.send(JSON.stringify({
 					
 				type:"gameover",
-				id: objects.player.id
+				id: objects.player.id,
+				name: objects.player.name
 			}))
 		}
 		const shoot = objects.player.shoot ? "shoot" : ""
@@ -60,7 +68,8 @@ export async function updateFromServer() {
 			y : objects.player.y,
 			angle: objects.player.angle,
 			texId: 4,
-			id : objects.player.id
+			id : objects.player.id,
+			name: objects.player.name
 		}))
 		objects.player.shoot = false;
 

@@ -13,7 +13,7 @@
 
     <div id="wrapper">
 
-		<p id="title">CHAMPION OF PHOBOS</p>        
+		<h1 id="title">CHAMPION OF PHOBOS</h1>        
 	<canvas id="raycaster" width="640" height="480"></canvas>
        	<div class="hud">
 
@@ -23,20 +23,14 @@
 
 
 		</div>
-
-       		<p id="winner">WINNER: </p> 
-
+		<div class="data">
+			<p id="winner"> </p> 
+		</div>
         </div>
-
 	<div class="menu">
-
-		<p>NAME: </p>
-		<p>SERVER IP: </p>
-		<p>NAME: </p>
-		<p>NAME: </p>
-		<p>NAME: </p>
-		<p>NAME: </p>
-		<p>NAME: </p>
+	<h1>SETTINGS</h1>
+		<p>PLAYER NAME: <input id="playerName" type="text"></input></p>
+		<p>SERVER IP: <input id="serverIp" type="text" value="localhost:7071"></input> <button id="connectButton">CONNECT</button></p>
 
 		<a href="info.html"> STORY </a>
 	</div>

@@ -16,6 +16,7 @@ export let objects =
 			width: 0,
 			shoot: false,
 			id: 0,
+			name: '',
 			hp: 100,
 			armor: 0,
 			gameover: false

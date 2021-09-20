@@ -51,8 +51,7 @@ wss.on('connection', (ws) => {
 				id: md.id
 			}))
 		} else if (message.type === "gameover") {
-					winner=message.id
-
+					winner=message.name
 		}
 	})
 

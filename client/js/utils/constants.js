@@ -35,22 +35,27 @@ export let constants =
 		skyImage: "res/sky.jpg",        
 		debugFont: "bold 12px arial",   
 		glIntervalTimeout: 50,       
-		ws: connectToServer(),
+		ws: connectToServer,
+
 
 	};
 
-async function connectToServer() {
-	const ws = new WebSocket('ws://localhost:7071/ws');
+export async function connectToServer(ip) {
 
-
-
+	let ws = null;
+	try {
+		ws = new WebSocket(`ws://localhost:7071/ws`);
+	} catch(err) {
+	}
+	ws.onerror = function (error) {
+	
+	}
 	return new Promise((resolve, reject) => {
 		const timer = setInterval(() => {
-			if(ws.readyState === 1) {
+			if(ws && ws.readyState === 1) {
 				clearInterval(timer)
 				resolve(ws);
 			}
 		}, 10);})
 
 }
-

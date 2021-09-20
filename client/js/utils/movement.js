@@ -4,7 +4,9 @@ import { classes } from "./classes.js"
 import { objects } from "../world/objects.js"
 import { levels } from "../world/levels.js"
 
+
 import { constants } from "./constants.js"
+import { state } from "../world/state.js"
 
 import { renderEngine } from "./renderengine.js"
 import { raycasting } from "./raycasting.js"
@@ -12,7 +14,7 @@ import { raycasting } from "./raycasting.js"
 
 let time = 100;
 let change = 0;
-let damageTime = 100;
+let damageTime = 50;
 let damageChange = 0;
 export function movement () {
 	var player = objects.player;
@@ -50,8 +52,8 @@ export function movement () {
 		if (intersection && intersection.distance < 75  &&   intersection.type!=='projectile') {
 
 		}
-		else if (intersection && intersection.type === 'projectile' && intersection.distance < 125) {
-			damageChange += 10
+		else if (intersection && intersection.type === 'projectile' && intersection.distance < 75) {
+
 			if (intersection.ownerId && intersection.ownerId !== objects.player.id && damageChange > damageTime) {
 				objects.player.hp -= 25;
 				document.getElementById("hp").innerHTML=`HP: ${objects.player.hp}`
@@ -117,11 +119,14 @@ export function movement () {
 	var update = function()
 	{
 		change += 10;
+
+		damageChange += 10
 		collision(true)
+		objects.player.name = document.getElementById("playerName").value
 		if (objects.player.hp <= 0) {
 			objects.player.gameover=true;
 		}
-		if (objects.keys.space.pressed) {
+		if (objects.keys.charX.pressed) {
 			if (!objects.player.shoot && change > time) {	
 				objects.player.shoot=true;
 				change = 0;
@@ -183,7 +188,6 @@ export function movement () {
 			for (var name in objects.keys) {
 				if (objects.keys[name].code == keyCode) {
 					objects.keys[name].pressed = true;
-					preventDefault(e);
 				}
 			}
 		};

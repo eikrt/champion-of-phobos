@@ -21,9 +21,25 @@ float:center
 .hud p {
 	float:left;	
 }
-.menu {
-	float:left;
 
+.menu {
+	position:absolute;
+	margin-top: 250px;
+	float:left;
+	margin-top:16px;
+}
+
+.menu p {
+
+	text-align: left;
+}
+
+.menu h1 {
+	text-align: left;
+}
+.data {
+
+	margin-bottom:16px;
 }
 #hp {
 	margin-right:5px
@@ -41,10 +57,6 @@ h1 {
     text-align: center;
 }
 
-p {
-    text-align: center;
-    line-height: 18px;
-}
 
 a {
     color: #ccc;
