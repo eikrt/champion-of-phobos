@@ -15,7 +15,10 @@ export let objects =
 			height: 48,
 			width: 0,
 			shoot: false,
-			id: 0
+			id: 0,
+			hp: 100,
+			armor: 0,
+			gameover: false
 		},
 
 		settings:
@@ -52,7 +55,7 @@ export let objects =
 				return selected;
 			},
 			selectedResolution: function() {
-				var selected = { w: 640, h: 480 };
+				var selected = { w: 320, h: 240 };
 
 				if (location.hash) {
 					var settings = location.hash.split("#")[1];

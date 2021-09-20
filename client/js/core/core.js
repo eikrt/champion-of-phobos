@@ -28,30 +28,31 @@ var Raycaster = function() {
     var engine = null;
 
     var start = async function(canvasId) {
-        var res = objects.settings.selectedResolution();
-        constants.screenWidth = res.w;
-        constants.screenHeight = res.h;
 
         var canvas = document.getElementById(canvasId);
-        canvas.width = constants.screenWidth;
-        canvas.height = constants.screenHeight;
-        objects.context = canvas.getContext("2d");
-        objects.Level = levels;
-        objects.Level.init();
+        canvas.width = constants.screenWidth*2;
+        canvas.height = constants.screenHeight*2;
+	const running = true;
+	if (running) {
+		objects.context = canvas.getContext("2d");
+		objects.context.scale(2,2)
+		objects.Level = levels;
+		objects.Level.init();
 
-        objects.loadResources();
+		objects.loadResources();
 
-        let engine = new renderEngine;
-        movement().init();
+		let engine = new renderEngine;
+		movement().init();
 
-        const userver = await updateFromServer()
-        objects.gameloopInterval = setInterval(function() {
+		const userver = await updateFromServer()
+		objects.gameloopInterval = setInterval(function() {
 
-            userver.update();
-            movement().update();
-            core_logic().logic()
-            renderEngine().update();
-        }, constants.glIntervalTimeout);
+		    userver.update();
+		    movement().update();
+		    core_logic().logic()
+		    renderEngine().update();
+		}, constants.glIntervalTimeout);
+	}
     }
     return {
         engine: engine,

@@ -1,9 +1,9 @@
 export let constants =
 	{
-		fieldOfView: 66,       
-		screenWidth: 640,       
-		screenHeight: 480,      
-		angleBetweenRays: Number(66 / 640), 
+		fieldOfView: 70,       
+		screenWidth: 480,       
+		screenHeight: 320,      
+		angleBetweenRays: Number(70 / 480), 
 		movementStep: 25,        
 		turningStep: 9,        
 		startFadingAt: 100,    
@@ -18,16 +18,19 @@ export let constants =
 		displayDebugInfo: false,
 		texturesFiles: [       
 			"res/bricks-brown.png",
-			"res/bricks-gray.png",
+			"res/cliff.png",
 			"res/painting.png",
 			"res/wood.png",
 			"res/floor.png",
+
 		],
 		spriteFiles: [          
-			"res/barrel.png",
-			"res/barrel_mask.png",
+			"res/plasma.png",
+			"res/plasma.png",
 			"res/pillar.png",
 			"res/pillar_mask.png",
+			"res/lizard.png",
+			"res/lizard.png"
 		],
 		skyImage: "res/sky.jpg",        
 		debugFont: "bold 12px arial",   

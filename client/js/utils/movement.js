@@ -12,6 +12,8 @@ import { raycasting } from "./raycasting.js"
 
 let time = 100;
 let change = 0;
+let damageTime = 100;
+let damageChange = 0;
 export function movement () {
 	var player = objects.player;
 
@@ -37,16 +39,8 @@ export function movement () {
 		player.angle.turn(angle);
 		renderEngine().redraw();
 	};
+	var collision = function(forward) {
 
-	var walk = function(forward, move)
-	{
-
-		let step = forward ? constants.movementStep : -constants.movementStep;
-
-		if (!move) {
-			step = 0;
-		}
-		var delta = raycasting().getDeltaXY(player.angle, step);
 
 		var angle = forward 
 			? player.angle 
@@ -56,14 +50,30 @@ export function movement () {
 		if (intersection && intersection.distance < 75  &&   intersection.type!=='projectile') {
 
 		}
-		else if (intersection && intersection.type === 'projectile' && intersection.distance < 75) {
-
-			player.x = Math.round(player.x + delta.x);
-			player.y = Math.round(player.y - delta.y);
-			if (intersection.ownerId !== objects.player.id) {
-				console.log("dead")
+		else if (intersection && intersection.type === 'projectile' && intersection.distance < 125) {
+			damageChange += 10
+			if (intersection.ownerId && intersection.ownerId !== objects.player.id && damageChange > damageTime) {
+				objects.player.hp -= 25;
+				document.getElementById("hp").innerHTML=`HP: ${objects.player.hp}`
+				damageChange = 0;
 			}
-			console.log(intersection.ownerId)
+		}
+
+	}
+	var walk = function(forward)
+	{
+
+		let step = forward ? constants.movementStep : -constants.movementStep;
+
+		var delta = raycasting().getDeltaXY(player.angle, step);
+
+		var angle = forward 
+			? player.angle 
+			: new classes.Angle(player.angle.degrees + 180);
+
+		var intersection = findIntersection(angle);
+		if (intersection && intersection.distance < 75  &&   intersection.type!=='projectile') {
+
 		}
 		else {
 
@@ -107,7 +117,10 @@ export function movement () {
 	var update = function()
 	{
 		change += 10;
-		walk(true, false)
+		collision(true)
+		if (objects.player.hp <= 0) {
+			objects.player.gameover=true;
+		}
 		if (objects.keys.space.pressed) {
 			if (!objects.player.shoot && change > time) {	
 				objects.player.shoot=true;
@@ -122,10 +135,10 @@ export function movement () {
 		}
 
 		if (objects.keys.arrowUp.pressed || objects.keys.charW.pressed) {
-			walk(true, true);
+			walk(true);
 		}
 		else if (objects.keys.arrowDown.pressed || objects.keys.charS.pressed) {
-			walk(false,true );
+			walk(false);
 		}
 
 		if (objects.keys.charA.pressed) {

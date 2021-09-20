@@ -6,6 +6,7 @@ const wss = new WebSocket.Server({
 
 const clients = new Map();
 const projectiles = []
+let winner = ''
 wss.on('connection', (ws) => {
 
 
@@ -24,6 +25,7 @@ wss.on('connection', (ws) => {
 				if (client.id === message.id) { // state update
 					client.x = message.x
 					client.y = message.y
+					client.winner=winner
 				}
 			});
 			if (message.action === "shoot") {
@@ -37,9 +39,10 @@ wss.on('connection', (ws) => {
 			const id = uuidv4();
 			const md = {
 				id: id,
-				texId: 2,
+				texId: 4,
 				x: 0,
-				y: 0
+				y: 0,
+				winner: ''
 
 			};
 			clients.set(ws, md);
@@ -47,6 +50,9 @@ wss.on('connection', (ws) => {
 				type: "init",
 				id: md.id
 			}))
+		} else if (message.type === "gameover") {
+					winner=message.id
+
 		}
 	})
 
@@ -61,7 +67,7 @@ function shoot(x, y, angle, id) {
 		x: x,
 		y: y,
 		z: 5,
-		velocity: 0.5,
+		velocity: 0.2,
 		angle: angle,
 		texId: 0,
 		yoff: 0,
