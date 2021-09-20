@@ -37,6 +37,12 @@ export async function updateFromServer() {
 		const messageBody = JSON.parse(wsmessage.data)
 		if (messageBody.type === "init") {
 			objects.player.id = messageBody.id
+
+			const rx = Math.floor(Math.random() * levels.spawnPoints.length);
+			const ry = Math.floor(Math.random() * levels.spawnPoints.length);
+			console.log(rx)
+			objects.player.x = levels.spawnPoints[rx].x 
+			objects.player.y = levels.spawnPoints[ry].y 
 		}
 		
 		else {

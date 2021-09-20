@@ -66,7 +66,7 @@ function shoot(x, y, angle, id) {
 		x: x,
 		y: y,
 		z: 5,
-		velocity: 0.2,
+		velocity: 0.8,
 		angle: angle,
 		texId: 0,
 		yoff: 0,
