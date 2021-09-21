@@ -26,7 +26,7 @@ export function movement () {
 			return false;
 		}
 
-		var objects = raycasting().findObjects(angle);
+		var objects = raycasting().findObjects(player.x, player.y, angle);
 
 		if (objects.length > 0) {
 
@@ -50,10 +50,8 @@ export function movement () {
 
 		var intersection = findIntersection(angle);
 		if (intersection && intersection.distance < 75  &&   intersection.type!=='projectile') {
-
 		}
-		else if (intersection && intersection.type === 'projectile' && intersection.distance < 75) {
-
+		else if (intersection && intersection.type === 'projectile' && intersection.distance < 100) {
 			if (intersection.ownerId && intersection.ownerId !== objects.player.id && damageChange > damageTime) {
 				objects.player.hp -= 25;
 				document.getElementById("hp").innerHTML=`HP: ${objects.player.hp}`
@@ -108,11 +106,16 @@ export function movement () {
 		var delta = raycasting().getDeltaXY(angle, constants.movementStep);
 		let  intersection = findIntersection(angle);
 
-		if (!intersection || intersection.distance > 20) {
+
+		if (intersection && intersection.distance < 75  &&   intersection.type!=='projectile') {
+
+		}
+		else {
+
 			player.x = Math.round(player.x + delta.x);
 			player.y = Math.round(player.y - delta.y);
-		}
 
+		}
 		renderEngine().redraw();
 	};
 

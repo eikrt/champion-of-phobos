@@ -2,7 +2,11 @@
 import { classes } from "../utils/classes.js"
 import { objects } from "../world/objects.js"
 
-const map = 	[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
+
+
+
+
+let map = 	[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
 		[1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,],
 		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,],
 		[1,0,2,0,1,1,1,1,1,1,1,1,1,1,0,1,0,1,0,0,0,2,0,1,],
@@ -28,48 +32,63 @@ const map = 	[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
 		[1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,],
 		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,],
 		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,]]
+map = [
+	[1,1,1,1,1],
+	[1,0,0,0,1],
+	[1,0,2,1,1],
+	[1,0,0,0,1],
+	[1,1,1,1,1],
 
+]
 const WALL_SIZE = 128
 
-export let levels = {
+export let levels = [
+	{
+		walls: generateMap() 
+		,
+		spawnPoints: generateSpawnPoints(),
+		sprites: [
+		],
+		entities: [
 
-	// Wall: function(x1, y1, x2, y2, z1, z2, h1, h2, textureId) {
-	walls: generateMap() 
+		],
 
+		sceneSprites: [
+			
+		],
+		elevations: [    
+		],
 
+		floorTextureId: 4,
 
-
-		/*classes.Wall(100, 10, 700, 10, 0, 0, 200, 200, 1),
-		classes.Wall(10, 100, 10, 700, 0, 0, 200, 200, 1),
-		classes.Wall(10, 100, 100, 10, 0, 0, 200, 200, 1),
-		classes.Wall(790, 100, 790, 700, 0, 0, 200, 200, 1),
-		classes.Wall(700, 10, 790, 100, 0, 0, 200, 200, 1),
-		classes.Wall(100, 790, 700, 790, 0, 0, 200, 200, 1),
-		classes.Wall(790, 700, 700, 790, 0, 0, 200, 200, 1),
-		classes.Wall(10, 700, 100, 790, 0, 0, 200, 200, 1),*/
-
-
+		init: function() {
+			objects.player.angle.setValue(340);
+		}
+		}
 	,
-	spawnPoints: generateSpawnPoints(),
-	sprites: [
-		//  classes.Sprite(100, 300, 0,0,0, 2),
-	],
-	entities: [
+	{
 
-	],
+		walls: generateMap() 
+		,
+		spawnPoints: generateSpawnPoints(),
+		sprites: [
+		],
+		entities: [
 
-	sceneSprites: [
-		
-	],
-	elevations: [    
-	],
+		],
 
-	floorTextureId: 4,
+		sceneSprites: [
+			
+		],
+		elevations: [    
+		],
 
-	init: function() {
-		objects.player.angle.setValue(340);
-	}
-};
+		floorTextureId: 4,
+
+		init: function() {
+			objects.player.angle.setValue(340);
+		}
+}]
 function generateMap() {
 	let walls = []
 	for (let i = 0; i < map.length; i++) {

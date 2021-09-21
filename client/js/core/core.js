@@ -46,7 +46,7 @@ var Raycaster = function() {
 	if (running) {
 		objects.context = canvas.getContext("2d");
 		objects.context.scale(2,2)
-		objects.Level = levels;
+		objects.Level = levels[0];
 		objects.Level.init();
 
 		objects.loadResources();

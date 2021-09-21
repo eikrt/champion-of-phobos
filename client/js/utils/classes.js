@@ -16,7 +16,7 @@ export let classes  =
 			};
 		},
 
-		Sprite: function(x, y, z, velocity, angle, id, yoff, ownerId, type) {
+		Sprite: function(x, y, z, velocity, angle, id, yoff, ownerId,ident, type) {
 			return {
 				x: x,      
 				y: y,
@@ -26,6 +26,7 @@ export let classes  =
 				yoff: yoff,
 				id: id,
 				ownerId: ownerId,
+				ident: ident,
 				type: type
 			};
 		},

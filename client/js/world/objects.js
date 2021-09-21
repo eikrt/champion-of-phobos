@@ -16,7 +16,7 @@ export let objects =
 			width: 0,
 			shoot: false,
 			id: 0,
-			name: '',
+			name: 'player',
 			hp: 100,
 			armor: 0,
 			gameover: false
@@ -45,8 +45,6 @@ export let objects =
 				var selected = 0;
 
 				if (location.hash) {
-					var settings = location.hash.split("#")[1];
-					var index = parseInt(settings.split(",")[0]);
 
 					if (index) {
 						selected = index;

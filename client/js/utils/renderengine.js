@@ -75,9 +75,9 @@ export function renderEngine()
 			}
 		}
 	};
-	var drawObjects = function(vscan, angle)
+	var drawObjects = function(px,py,vscan, angle)
 	{
-		var intersections = raycasting().findObjects(angle, vscan);
+		var intersections = raycasting().findObjects(px, py, angle, vscan);
 
 		for (var i = 0; i < intersections.length; i++) {
 			var intersection = intersections[i];
@@ -140,7 +140,7 @@ export function renderEngine()
 		return Number(1 - 1 / colorDivider);
 	};
 
-	var drawWorld = function()
+	var drawWorld = function(px, py)
 	{
 		drawing.clear();
 		drawing.square(0, 0, constants.screenWidth, constants.screenHeight / 2, drawing.colorRgb(60, 60, 60));
@@ -152,7 +152,7 @@ export function renderEngine()
 		var angle = new classes.Angle(objects.player.angle.degrees + constants.fieldOfView / 2);
 
 		for (var vscan = 0; vscan < constants.screenWidth; vscan++)  {
-			drawObjects(vscan, angle);
+			drawObjects(px, py, vscan, angle);
 			angle.turn(-constants.angleBetweenRays);
 		}
 	};
@@ -182,7 +182,7 @@ export function renderEngine()
 	var update = function()
 	{
 		updateElevation();
-		drawWorld();
+		drawWorld(objects.player.x, objects.player.y);
 		objects.redrawScreen = false;
 	}
 	return {

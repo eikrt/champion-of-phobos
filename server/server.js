@@ -5,7 +5,7 @@ const wss = new WebSocket.Server({
 
 
 const clients = new Map();
-const projectiles = []
+let projectiles = []
 let winner = ''
 wss.on('connection', (ws) => {
 
@@ -19,17 +19,33 @@ wss.on('connection', (ws) => {
 		if (message.type === "update") {
 
 			tick()
-			const outbound = JSON.stringify(message);
+			const outbound = JSON.stringify(message)
+			message.deletedProjectiles.forEach(dp => {
+			/*projectiles = projectiles.filter(function( obj ) {
+				  return obj.ident !== dp;
+					
+			
 
+			})*/
+			projectiles.forEach(p => {
+
+				if (p.ident === dp) {
+
+					p.active = false;
+				}
+			})
+			});
 			clients.forEach((client) => {
 				if (client.id === message.id) { // state update
 					client.x = message.x
 					client.y = message.y
 					client.winner=winner
+					client.active = message.active
+					client.name = message.name
+					client.angle = message.angle
 				}
 			});
 			if (message.action === "shoot") {
-				
 				shoot(message.x, message.y, message.angle, message.id)
 			}
 			let array = Array.from(clients.values())
@@ -61,24 +77,33 @@ wss.on('connection', (ws) => {
 })
 
 function shoot(x, y, angle, id) {
-
 	projectiles.push({
 		x: x,
 		y: y,
 		z: 5,
-		velocity: 0.8,
+		velocity: 0.3,
 		angle: angle,
 		texId: 0,
 		yoff: 0,
-		shooterId: id})
+		shooterId: id,
+		timer: 200,
+		active: true,
+		ident: uuidv4()})
 
 }
 function tick() {
 
 	const delta = 10
 	projectiles.forEach(s => {
+		s.timer -= delta;
 		s.x += (Math.cos(s.angle.radians) * s.velocity / delta)*1000;
-		s.y -= (Math.sin(s.angle.radians) * s.velocity / delta)*1000})
+		s.y -= (Math.sin(s.angle.radians) * s.velocity / delta)*1000
+
+		if (s.timer <= 0) {
+			//s.active=false;
+		}
+	})
+
 
 }
 function uuidv4() {
