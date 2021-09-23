@@ -43,6 +43,7 @@ wss.on('connection', (ws) => {
 					client.active = message.active
 					client.name = message.name
 					client.angle = message.angle
+					client.type = 'player'
 				}
 			});
 			if (message.action === "shoot") {
@@ -88,6 +89,7 @@ function shoot(x, y, angle, id) {
 		shooterId: id,
 		timer: 200,
 		active: true,
+		type: 'projectile',
 		ident: uuidv4()})
 
 }

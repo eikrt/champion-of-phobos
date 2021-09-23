@@ -1,88 +1,102 @@
 import {
-    objects
+	objects
 } from "../world/objects.js";
 
 import {
-    core_logic
+	core_logic
 } from "../utils/logic.js";
 import {
 	updateWs
 } from "../utils/logic.js"
 
 import {
-    updateFromServer
+	updateFromServer
 } from "../utils/logic.js";
 
 import {
-    constants
+	constants
 } from "../utils/constants.js";
 
 
 import {
-    connectToServer
+	connectToServer
 } from "../utils/constants.js";
 import {
-    levels
+	levels
 } from "../world/levels.js";
 import {
-    movement
+	movement
 } from "../utils/movement.js";
 
 import {
-    renderEngine
+	state
+} from "../world/state.js";
+import {
+	renderEngine
 } from "../utils/renderengine.js"
 var Raycaster = function() {
 
-    var engine = null;
+	var engine = null;
 
-    var start = async function(canvasId) {
+	var start = async function(canvasId) {
 
-        var canvas = document.getElementById(canvasId);
-        canvas.width = constants.screenWidth*2;
-        canvas.height = constants.screenHeight*2;
-	const running = true;
-
-
-	if (running) {
-		objects.context = canvas.getContext("2d");
-		objects.context.scale(2,2)
-		objects.Level = levels[0];
-		objects.Level.init();
-
-		objects.loadResources();
-
-		let engine = new renderEngine;
-		movement().init();
+		var canvas = document.getElementById(canvasId);
+		canvas.width = constants.screenWidth*2;
+		canvas.height = constants.screenHeight*2;
+		const running = true;
 
 
+		if (running) {
+				objects.context = canvas.getContext("2d");
+				objects.context.scale(2,2)
+				objects.Level = levels[0];
+				objects.Level.init();
 
-			constants.ws = connectToServer(document.getElementById("serverIp").value)
-		let userver = await updateFromServer()
+				objects.loadResources();
 
-		objects.gameloopInterval = setInterval(function() {
-			if (userver) {
-		    		userver.update();
-				  }
-		    movement().update();
-		    core_logic().logic()
-		    renderEngine().update();
-			document.getElementById("connectButton").onclick = async() => {
+				let engine = new renderEngine;
+				movement().init();
 
-			constants.ws = connectToServer(document.getElementById("serverIp").value)
 
-			userver = await updateFromServer()
+
+			let userver;
+			if (state.connected) {
+				constants.ws = connectToServer(document.getElementById("serverIp").value)
+				userver = await updateFromServer()
+
+			}
+				objects.gameloopInterval = setInterval(function() {
+
+					if (!objects.player.gameover) {
+
+
+						if (userver) {
+							userver.update();
+						}
+						movement().update();
+						core_logic().logic()
+						renderEngine().update();
+					}
+					document.getElementById("connectButton").onclick = async() => {
+						
+
+						constants.ws = connectToServer(document.getElementById("serverIp").value)
+
+						userver = await updateFromServer()
+						state.connected = true;
+					}
+				}, constants.glIntervalTimeout);
+			
 		}
-		}, constants.glIntervalTimeout);
 	}
-    }
-    return {
-        engine: engine,
-        start: start
-    };
+	return {
+		engine: engine,
+		start: start
+	};
 }();
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    Raycaster.start("raycaster");
+	Raycaster.start("raycaster");
 
 }, true);

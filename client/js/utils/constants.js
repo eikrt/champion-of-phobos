@@ -19,18 +19,24 @@ export let constants =
 		texturesFiles: [       
 			"res/bricks-brown.png",
 			"res/cliff.png",
-			"res/painting.png",
-			"res/wood.png",
-			"res/floor.png",
 
 		],
 		spriteFiles: [          
 			"res/plasma.png",
 			"res/plasma.png",
-			"res/pillar.png",
-			"res/pillar_mask.png",
 			"res/lizard.png",
-			"res/lizard.png"
+			"res/lizard.png",
+			"res/lizard2.png",
+			"res/lizard2.png",
+			"res/lizard3.png",
+			"res/lizard3.png",
+			"res/lizard4.png",
+			"res/lizard4.png",
+			"res/grass.png",
+			"res/grass.png",
+			"res/medkit.png",
+			"res/medkit.png",
+
 		],
 		skyImage: "res/sky.jpg",        
 		debugFont: "bold 12px arial",   
@@ -44,11 +50,11 @@ export async function connectToServer(ip) {
 
 	let ws = null;
 	try {
-		ws = new WebSocket(`ws://localhost:7071/ws`);
+		ws = new WebSocket(`ws://${ip}/ws`);
 	} catch(err) {
 	}
 	ws.onerror = function (error) {
-	
+		return;
 	}
 	return new Promise((resolve, reject) => {
 		const timer = setInterval(() => {

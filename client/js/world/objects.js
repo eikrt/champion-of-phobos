@@ -19,7 +19,8 @@ export let objects =
 			name: 'player',
 			hp: 100,
 			armor: 0,
-			gameover: false
+			gameover: false,
+			champion: 'lizard'
 		},
 
 		settings:

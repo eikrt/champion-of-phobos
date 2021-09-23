@@ -1,3 +1,4 @@
 export let state = {
-	winner: ''
+	winner: '',
+	connected: false
 };
